@@ -95,17 +95,20 @@ class Categories
   end
 
   def small_straight(scorecard, dice)
-    dice = dice.sort
-    mini_straight1 = dice[1] - 1 == dice[0]
-    mini_straight2 = dice[2] - 1 == dice[1]
-    mini_straight3 = dice[3] - 1 == dice[2]
-    mini_straight4 = dice[4] - 1 == dice[3]
-    scenario1 = mini_straight1 && mini_straight2 && mini_straight3
-    scenario2 = mini_straight2 && mini_straight3 && mini_straight4
-    if scenario1 || scenario2
-      valid = true
+    # if roll includes duplicates
+    dice = dice.sort.uniq
+    if dice.length == 4
+      valid = false
+      if dice == [1, 2, 3, 4] || dice == [2, 3, 4, 5] || dice == [3, 4, 5, 6]
+        valid = true
+      end
+    # if roll does not include duplicates but still contains 5 unique numbers 
+    # ie [1, 3, 4, 5, 6] or [1, 2, 3, 4, 6]
     else
       valid = false
+      if (dice[0] + 3 == dice[3]) || (dice[1] + 3 == dice[4])
+        valid = true
+      end
     end
     if scorecard.scorecard[:small_straight] == 0 && valid
       scorecard.scorecard[:small_straight] = 30

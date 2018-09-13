@@ -23,6 +23,20 @@ class Scorecard
     @scorecard
   end
 
+  def display_scorecard
+    @scorecard.each do |category, value|
+      if category == :three_of_a_kind
+        category = "Three-of-a-kind"
+      elsif category == :four_of_a_kind
+        category = "Four-of-a-kind"
+      else 
+        category = category.to_s.gsub(/_/, ' ')
+      end
+      puts "#{category.capitalize}: #{value}"
+    end
+    p @scorecard
+  end
+
   def bonus
     @bonus
   end

@@ -8,6 +8,7 @@ class Gameplay
     @scorecard = Scorecard.new
     @categories = Categories.new
     @round = 1
+    @roll_number = 1
   end
 
   def start
@@ -64,6 +65,19 @@ class Gameplay
     select_category
   end
 
+  def next_roll
+    if @roll_number == 1
+      @roll_number += 1
+      roll_two
+    elsif @roll_number == 2
+      @roll_number += 1
+      select_category
+    elsif @roll_number == 3
+      @roll_number = 1
+      roll_one
+    end
+  end
+
   def next_round
     if @scorecard.is_full
       end_game
@@ -81,12 +95,17 @@ class Gameplay
       puts
       puts "Dice To Reroll:"
       @dice_to_reroll.each do |die|
-        puts "Dice #{die}"
+        die = die.to_i
+        index = die - 1
+        puts "Dice #{die}: #{@dice.roll[index]}"
       end
       puts "[Enter] If this is correct"
       puts "To re-select dice to re-roll, type [1]"
       choice = gets.chomp.to_i
       if choice == 1
+        system "clear"
+        @dice.display
+        puts
         reroll_procedure
       else
         accept = true
@@ -102,6 +121,7 @@ class Gameplay
       die -= 1
       @dice.reroll(die)
     end
+    next_roll
   end
 
   def select_category
@@ -154,8 +174,9 @@ class Gameplay
       @categories.chance(@scorecard, @dice.roll)
     end
     @categories.bonus(@scorecard)
-    puts "Scoreboard:"
-    p @scorecard.scorecard
+    puts
+    puts "Scorecard:"
+    @scorecard.display_scorecard
     puts "[Enter] to continue."
     gets.chomp
     next_round
