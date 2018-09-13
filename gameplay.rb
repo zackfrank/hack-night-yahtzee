@@ -38,7 +38,7 @@ class Gameplay
     elsif choice == 2
       select_category
     elsif choice == 3
-      select_dice_to_reroll
+      reroll_procedure
       roll_two
     end
   end
@@ -59,7 +59,7 @@ class Gameplay
     elsif choice == 2
       select_category
     elsif choice == 3
-      select_dice_to_reroll
+      reroll_procedure
     end
     select_category
   end
@@ -73,12 +73,29 @@ class Gameplay
     end
   end
 
-  def select_dice_to_reroll
+  def select_dice_to_reroll 
+    accept = false
+    until accept
+      dice_to_reroll = gets.chomp.gsub(/\s+/, "").split(',').to_i
+      dice_to_reroll = dice_to_reroll.select {|dice| dice >= 1 && dice <= 6}
+      puts
+      puts "Dice To Reroll: #{dice_to_reroll}"
+      puts "If this is correct, type [1]"
+      puts "To re-select dice to re-roll, type [2]"
+      choice = gets.chomp.to_i
+      if choice == 1
+        accept = true
+      else
+        reroll_procedure
+      end
+    end
+  end
+
+  def reroll_procedure
     puts "Which dice would you like to re-roll? Type integers and separate with a comma."
-    dice_to_reroll = gets.chomp.split
-    puts "Dice To Reroll: #{dice_to_reroll}"
+    select_dice_to_reroll
     dice_to_reroll.each do |die|
-      die = die.to_i - 1
+      die -= 1
       @dice.reroll(die)
     end
   end
