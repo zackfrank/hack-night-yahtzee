@@ -135,6 +135,8 @@ class Categories
     valid = dice.uniq.length == 1
     if scorecard.scorecard[:yahtzee] == 0 && valid
       scorecard.scorecard[:yahtzee] = 50
+    elsif scorecard.scorecard[:yahtzee] != "X" && valid
+      scorecard.scorecard[:yahtzee_bonus] = 100
     else
       scorecard.scorecard[:yahtzee] = "X"
     end    

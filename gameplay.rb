@@ -147,7 +147,13 @@ class Gameplay
     puts "[11] Large Straight (#{@scorecard.scorecard[:large_straight]})"
     puts "[12] YAHTZEE (#{@scorecard.scorecard[:yahtzee]})"
     puts "[13] Chance (#{@scorecard.scorecard[:chance]})"
-    puts "BONUS: #{@scorecard.bonus}"
+    puts
+    if @scorecard.scorecard[:bonus]
+      puts "Bonus: #{@scorecard.scorecard[:bonus]}"
+    end
+    if @scorecard.scorecard[:yahtzee_bonus]
+      puts "Yahtzee Bonus: #{@scorecard.scorecard[:yahtzee_bonus]}"
+    end
     puts
     print "Selection: "
     choice = gets.chomp.to_i
@@ -218,10 +224,18 @@ class Gameplay
         @categories.large_straight(@scorecard, @dice.roll)
       end
     elsif choice == 12
-      if @scorecard.scorecard[:yahtzee] != 0
+      # if YAHTZEE open, get 50 or "X", if already "X", choose again
+      if @scorecard.scorecard[:yahtzee] == 0
+        @categories.yahtzee(@scorecard, @dice.roll)
+      elsif @scorecard.scorecard[:yahtzee] == "X"
         choose_again
       else
-        @categories.yahtzee(@scorecard, @dice.roll)
+        # if valid 2nd YAHTZEE and bonus is open, get bonus, otherwise choose again
+        if @dice.roll.uniq.length == 1 && @scorecard.scorecard[:yahtzee] == 50 && !@scorecard.scorecard[:yahtzee_bonus]
+          @categories.yahtzee(@scorecard, @dice.roll)
+        else
+          choose_again
+        end
       end
     elsif choice == 13
       if @scorecard.scorecard[:chance] != 0

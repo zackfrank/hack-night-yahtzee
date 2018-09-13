@@ -2,11 +2,12 @@ class Dice
 
   def initialize
     @roll = [
-      rand(1..6),
-      rand(1..6),
-      rand(1..6),
-      rand(1..6),
-      rand(1..6)
+      # rand(1..6),
+      # rand(1..6),
+      # rand(1..6),
+      # rand(1..6),
+      # rand(1..6)
+      5, 5, 5, 5, 5
     ]
   end
 

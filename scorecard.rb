@@ -17,6 +17,7 @@ class Scorecard
       chance: 0
     }
     @bonus = 0
+    @yahtzee_bonus = 0
   end
 
   def scorecard
@@ -25,6 +26,10 @@ class Scorecard
 
   def bonus
     @bonus
+  end
+
+  def yahtzee_bonus
+    @yahtzee_bonus
   end
 
   def display_scorecard
@@ -38,7 +43,6 @@ class Scorecard
       end
       puts "#{category.capitalize}: #{value}"
     end
-    puts "Bonus: #{@bonus}"
   end
 
   def is_full
@@ -60,7 +64,7 @@ class Scorecard
   def grand_total
     all_valid_scores = @scorecard.values.select {|value| value != "X"}
     subtotal = all_valid_scores.reduce(:+)
-    subtotal + @bonus
+    subtotal + @bonus + @yahtzee_bonus
   end
 
 end
