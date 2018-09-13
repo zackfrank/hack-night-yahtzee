@@ -34,7 +34,6 @@ class Scorecard
       end
       puts "#{category.capitalize}: #{value}"
     end
-    p @scorecard
   end
 
   def bonus
