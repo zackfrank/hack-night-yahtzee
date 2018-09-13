@@ -116,11 +116,7 @@ class Categories
 
   def large_straight(scorecard, dice)
     dice = dice.sort
-    mini_straight1 = dice[1] - 1 == dice[0]
-    mini_straight2 = dice[2] - 1 == dice[1]
-    mini_straight3 = dice[3] - 1 == dice[2]
-    mini_straight4 = dice[4] - 1 == dice[3]
-    if mini_straight1 && mini_straight2 && mini_straight3 && mini_straight4
+    if dice == [1, 2, 3, 4, 5] || dice == [2, 3, 4, 5, 6]
       valid = true
     else
       valid = false
