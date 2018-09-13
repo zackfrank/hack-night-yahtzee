@@ -70,19 +70,16 @@ class Gameplay
       @roll_number += 1
       roll_two
     elsif @roll_number == 2
-      @roll_number += 1
       select_category
-    elsif @roll_number == 3
-      @roll_number = 1
-      roll_one
     end
   end
 
   def next_round
-    if @scorecard.is_full
+    if @round == 13
       end_game
     else
       @round += 1
+      @roll_number = 1
       roll_one
     end
   end
@@ -177,6 +174,7 @@ class Gameplay
     puts
     puts "Scorecard:"
     @scorecard.display_scorecard
+    puts
     puts "[Enter] to continue."
     gets.chomp
     next_round

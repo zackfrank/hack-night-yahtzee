@@ -59,12 +59,12 @@ class Categories
 
   def bonus(scorecard)
     if scorecard.part_one_total >= 63
-      scorecard.bonus = 35
+      scorecard.scorecard[:bonus] = 35
     end
   end
 
   def three_of_a_kind(scorecard, dice)
-    valid_number = dice.detect {|die| (dice.count(die) == 3)}
+    valid_number = dice.detect {|die| (dice.count(die) >= 3)}
     score = dice.reduce(:+)
     if scorecard.scorecard[:three_of_a_kind] == 0 && valid_number
       scorecard.scorecard[:three_of_a_kind] = score
@@ -74,7 +74,7 @@ class Categories
   end
 
   def four_of_a_kind(scorecard, dice)
-    valid_number = dice.detect {|die| (dice.count(die) == 4)}
+    valid_number = dice.detect {|die| (dice.count(die) >= 4)}
     score = dice.reduce(:+)
     if scorecard.scorecard[:four_of_a_kind] == 0 && valid_number
       scorecard.scorecard[:four_of_a_kind] = score
