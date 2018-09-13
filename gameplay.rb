@@ -17,15 +17,14 @@ class Gameplay
     puts
     puts "[Enter] to continue."
     gets.chomp
+    @dice = Dice.new
     roll_one
   end
 
   def roll_one
     system "clear"
-    print "[Enter] to take your first roll for Round #{@round}"
-    gets.chomp
+    puts "Round #{@round}, Roll One:"
     puts
-    @dice = Dice.new
     @dice.display
     puts
     puts "Which would you like to re-roll?"
@@ -41,12 +40,14 @@ class Gameplay
     elsif choice == 3
       reroll_procedure
       roll_two
+    else
+      roll_one
     end
   end
   
   def roll_two
     system "clear"
-    puts "Roll Two:"
+    puts "Round #{@round}, Roll Two:"
     puts
     @dice.display
     puts
@@ -61,6 +62,8 @@ class Gameplay
       select_category
     elsif choice == 3
       reroll_procedure
+    else
+      roll_two
     end
     select_category
   end
@@ -80,6 +83,10 @@ class Gameplay
     else
       @round += 1
       @roll_number = 1
+      system "clear"
+      print "[Enter] to take your first roll for Round #{@round}"
+      gets.chomp
+      @dice = Dice.new
       roll_one
     end
   end
@@ -123,7 +130,7 @@ class Gameplay
 
   def select_category
     system "clear"
-    puts "Your Final Roll:"
+    puts "Round #{@round}, Your Final Roll:"
     @dice.display
     puts
     puts "---- Categories ----"
@@ -140,44 +147,109 @@ class Gameplay
     puts "[11] Large Straight (#{@scorecard.scorecard[:large_straight]})"
     puts "[12] YAHTZEE (#{@scorecard.scorecard[:yahtzee]})"
     puts "[13] Chance (#{@scorecard.scorecard[:chance]})"
+    puts "BONUS: #{@scorecard.bonus}"
     puts
     print "Selection: "
     choice = gets.chomp.to_i
     if choice == 1
-      @categories.ones(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:ones] != 0
+        choose_again
+      else
+        @categories.ones(@scorecard, @dice.roll)
+      end
     elsif choice == 2
-      @categories.twos(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:twos] != 0
+        choose_again
+      else
+        @categories.twos(@scorecard, @dice.roll)
+      end
     elsif choice == 3
-      @categories.threes(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:threes] != 0
+        choose_again
+      else
+        @categories.threes(@scorecard, @dice.roll)
+      end
     elsif choice == 4
-      @categories.fours(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:fours] != 0
+        choose_again
+      else
+        @categories.fours(@scorecard, @dice.roll)
+      end
     elsif choice == 5
-      @categories.fives(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:fives] != 0
+        choose_again
+      else
+        @categories.fives(@scorecard, @dice.roll)
+      end
     elsif choice == 6
-      @categories.sixes(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:sixes] != 0
+        choose_again
+      else
+        @categories.sixes(@scorecard, @dice.roll)
+      end
     elsif choice == 7
-      @categories.three_of_a_kind(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:three_of_a_kind] != 0
+        choose_again
+      else
+        @categories.three_of_a_kind(@scorecard, @dice.roll)
+      end
     elsif choice == 8
-      @categories.four_of_a_kind(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:four_of_a_kind] != 0
+        choose_again
+      else
+        @categories.four_of_a_kind(@scorecard, @dice.roll)
+      end
     elsif choice == 9
-      @categories.full_house(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:full_house] != 0
+        choose_again
+      else
+        @categories.full_house(@scorecard, @dice.roll)
+      end
     elsif choice == 10
-      @categories.small_straight(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:small_straight] != 0
+        choose_again
+      else
+        @categories.small_straight(@scorecard, @dice.roll)
+      end
     elsif choice == 11
-      @categories.large_straight(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:large_straight] != 0
+        choose_again
+      else
+        @categories.large_straight(@scorecard, @dice.roll)
+      end
     elsif choice == 12
-      @categories.yahtzee(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:yahtzee] != 0
+        choose_again
+      else
+        @categories.yahtzee(@scorecard, @dice.roll)
+      end
     elsif choice == 13
-      @categories.chance(@scorecard, @dice.roll)
+      if @scorecard.scorecard[:chance] != 0
+        choose_again
+      else
+        @categories.chance(@scorecard, @dice.roll)
+      end
+    else
+      select_category
     end
     @categories.bonus(@scorecard)
     puts
+    system "clear"
     puts "Scorecard:"
+    puts
     @scorecard.display_scorecard
     puts
     puts "[Enter] to continue."
     gets.chomp
     next_round
+  end
+
+  def choose_again
+    system "clear"
+    puts "Category taken, choose another category."
+    puts "[Enter] to continue"
+    gets.chomp
+    select_category
   end
 
   def end_game
@@ -193,6 +265,8 @@ class Gameplay
       @scorecard = Scorecard.new
       @round = 1
       self.start
+    else
+      return
     end
   end
   

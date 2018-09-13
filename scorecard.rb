@@ -23,6 +23,10 @@ class Scorecard
     @scorecard
   end
 
+  def bonus
+    @bonus
+  end
+
   def display_scorecard
     @scorecard.each do |category, value|
       if category == :three_of_a_kind
@@ -34,10 +38,7 @@ class Scorecard
       end
       puts "#{category.capitalize}: #{value}"
     end
-  end
-
-  def bonus
-    @bonus
+    puts "Bonus: #{@bonus}"
   end
 
   def is_full
