@@ -75,7 +75,7 @@ class Categories
 
   def four_of_a_kind(scorecard, dice)
     valid_number = dice.detect {|die| (dice.count(die) == 4)}
-    potential_score = dice.reduce(:+)
+    score = dice.reduce(:+)
     if scorecard.scorecard[:four_of_a_kind] == 0 && valid_number
       scorecard.scorecard[:four_of_a_kind] = score
     else
