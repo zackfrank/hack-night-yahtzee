@@ -76,17 +76,20 @@ class Gameplay
   def select_dice_to_reroll 
     accept = false
     until accept
-      dice_to_reroll = gets.chomp.gsub(/\s+/, "").split(',').to_i
-      dice_to_reroll = dice_to_reroll.select {|dice| dice >= 1 && dice <= 6}
+      @dice_to_reroll = gets.chomp.gsub(/\s+/, "").split(',')
+      @dice_to_reroll = @dice_to_reroll.select {|dice| dice.to_i >= 1 && dice.to_i <= 6}
       puts
-      puts "Dice To Reroll: #{dice_to_reroll}"
-      puts "If this is correct, type [1]"
-      puts "To re-select dice to re-roll, type [2]"
+      puts "Dice To Reroll:"
+      @dice_to_reroll.each do |die|
+        puts "Dice #{die}"
+      end
+      puts "[Enter] If this is correct"
+      puts "To re-select dice to re-roll, type [1]"
       choice = gets.chomp.to_i
       if choice == 1
-        accept = true
-      else
         reroll_procedure
+      else
+        accept = true
       end
     end
   end
@@ -94,7 +97,8 @@ class Gameplay
   def reroll_procedure
     puts "Which dice would you like to re-roll? Type integers and separate with a comma."
     select_dice_to_reroll
-    dice_to_reroll.each do |die|
+    @dice_to_reroll.each do |die|
+      die = die.to_i
       die -= 1
       @dice.reroll(die)
     end
