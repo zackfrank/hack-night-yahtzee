@@ -127,19 +127,19 @@ class Gameplay
     @dice.display
     puts
     puts "---- Categories ----"
-    puts "[1] Ones"
-    puts "[2] Twos"
-    puts "[3] Threes"
-    puts "[4] Fours"
-    puts "[5] Fives"
-    puts "[6] Sixes"
-    puts "[7] Three-of-a-Kind"
-    puts "[8] Four-of-a-Kind"
-    puts "[9] Full House"
-    puts "[10] Small Straight"
-    puts "[11] Large Straight"
-    puts "[12] YAHTZEE"
-    puts "[13] Chance"
+    puts "[1] Ones (#{@scorecard.scorecard[:ones]})"
+    puts "[2] Twos (#{@scorecard.scorecard[:twos]})"
+    puts "[3] Threes (#{@scorecard.scorecard[:threes]})"
+    puts "[4] Fours (#{@scorecard.scorecard[:fours]})"
+    puts "[5] Fives (#{@scorecard.scorecard[:fives]})"
+    puts "[6] Sixes (#{@scorecard.scorecard[:sixes]})"
+    puts "[7] Three-of-a-Kind (#{@scorecard.scorecard[:three_of_a_kind]})"
+    puts "[8] Four-of-a-Kind (#{@scorecard.scorecard[:four_of_a_kind]})"
+    puts "[9] Full House (#{@scorecard.scorecard[:full_house]})"
+    puts "[10] Small Straight (#{@scorecard.scorecard[:small_straight]})"
+    puts "[11] Large Straight (#{@scorecard.scorecard[:large_straight]})"
+    puts "[12] YAHTZEE (#{@scorecard.scorecard[:yahtzee]})"
+    puts "[13] Chance (#{@scorecard.scorecard[:chance]})"
     puts
     print "Selection: "
     choice = gets.chomp.to_i
@@ -183,7 +183,7 @@ class Gameplay
   def end_game
     system "clear"
     puts "Game Over!"
-    puts "Your score was: #{scoreboard.grand_total}"
+    puts "Your score was: #{@scorecard.grand_total}"
     puts "Great job!"
     puts
     puts "[Enter] to end the game"
